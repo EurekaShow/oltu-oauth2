@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script src="../static/js/base/require.js"></script>
+    <script src="../static/js/app.js"></script>
+    <title>授权管理</title>
+</head>
+<body>
+<div class="index" id="index" style="height: 643px;">
+    <div class="index_top_box">
+        <div class="role_photo">
+        </div>
+        <div class="role_name" v-text="consumerName"></div>
+    </div>
+    <div class="index_top_content clearfix">
+        <a href="#"><i class="one"></i><span>通知</span></a>
+        <a href="#"><i class="two"></i><span>档案</span></a>
+        <a href="#"><i class="three"></i><span>预警</span></a>
+        <a href="customerList.html"><i class="four"></i><span>家庭圈</span></a>
+    </div>
+    <div class="index_content">
+        <a href="care.html"><i class="third"></i><span>关心</span></a>
+        <a href="customerLocation.html"><i class="first"></i><span>定位</span></a>
+        <a href="customerTrack.html"><i class="second"></i><span>轨迹</span></a>
+        <a href="electronicFence.html"><i class="fouth"></i><span>电子围栏</span></a>
+        <a href="#"><i class="fifth"></i><span>心愿</span></a>
+        <a href="#"><i class="sixth"></i><span>发现</span></a>
+        <a href="{{healthUrl}}"><i class="seventh"></i><span>健康</span></a>
+        <a href="order.html"><i class="eight"></i><span>预约</span></a>
+        <a href="{{workorderUrl}}"><i class="eight"></i><span>工单评价</span></a>
+        <!--<a href="#" class="more"><i class="more2"></i><span>更多</span></a>-->
+
+    </div>
+
+</div>
+</body>
+<!--<script src="../static/js/zepto.min.js"></script>
+<script src="../static/js/touch.js"></script>-->
+<script type="text/javascript">
+    require(["index"],function (ix) {
+
+    $(function(){
+//            随机背景色
+//        var lis=$(".layer li");
+//        $.each(lis,function(){
+//            var r=Math.floor(Math.random()*256);
+//            var g=Math.floor(Math.random()*256);
+//            var b=Math.floor(Math.random()*256);
+//            this.style.backgroundColor="rgba("+r+','+g+','+b+','+0.7+")";
+//        })
+//            其他
+        $('.cancel').addClass('hide');
+        $('s').addClass('hide');
+        $('li').addClass('border_style');
+        $('.more').on('tap',function(){
+            $('.layer').get(0).style.display="block";
+            $('.index_more').addClass('bounceInUp animated');
+        })
+        $('.back').on('tap',function(){
+            $('.cancel').addClass('hide');
+            $('s').addClass('hide');
+            $('.layer').get(0).style.display="none";
+        //    $('li').removeClass('border_style');
+        })
+        $('.manage').on('tap',function(){
+            $('.cancel').removeClass('hide');
+            $('s').removeClass('hide');
+        //     $('li').addClass('border_style');
+            $('s').addClass('show');
+        })
+        $('.cancel').on('tap',function(){
+        //     $('li').removeClass('border_style');
+            $('s').addClass('hide');
+            $('.cancel').addClass('hide');
+        })
+        //首页自定义背景
+        $('.index_top_box').on('tap',function(){
+        })
+    })
+    });
+</script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/mui.min.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <script src="../static/js/base/require.js"></script>
+    <script src="../static/js/app.js"></script>
+    <title>登录</title>
+</head>
+<body>
+    <div class="login_logo">
+    </div>
+    <div class="container-fluid" id="app">
+        <div class="row">
+            <div class="col-xs-1 col-md-4"></div>
+            <div class="login_box col-xs-10 col-md-4">
+                <span class="user_name">手机号</span><br>
+                <input type="text" v-model="phone" value="" placeholder="请输入手机号" class="name1" style="color: #000" /><br>
+                <span class="user_pwd">密码</span><br>
+                <input type="password" v-model="pwd" value="" placeholder="请输入密码" class="name1" style="color: #000"/>
+                <input type="button" value="登录" class="sure mui-text-center" @click="login()" style="background-color: #2497FF;border: 1px solid #2497FF;box-shadow: 0px 0px 3px #454850;margin-top: 15px;" />
+                <input type="button" value="取消" class="cancel mui-text-center" style="background-color: #373D4D;border: 1px solid #373D4D;box-shadow: 0px 0px 3px #3B404D;"/>
+                <input type="hidden" v-model="wechat" value=""/>
+            </div>
+            <div class="col-xs-1 col-md-4"></div>
+        </div>
+    </div>
+    <script>
+        window.onload=function(){
+            document.getElementsByTagName('body')[0].style.height = window.innerHeight-200+'px';
+        }
+        window.onresize=function(){
+            document.getElementsByTagName('body')[0].style.height = window.innerHeight-200+'px';
+        }
+    </script>
+    <script>
+        require(["login"],function (login) {
+
+            mui.init({
+                swipeBack: false
+            });
+
+        });
+    </script>
+</body>
+</html>
