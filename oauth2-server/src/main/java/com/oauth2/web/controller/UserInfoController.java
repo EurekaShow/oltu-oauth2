@@ -85,6 +85,7 @@ public class UserInfoController {
                         .buildHeaderMessage();
                 HttpHeaders responseHeaders = new HttpHeaders();
                 responseHeaders.add("Content-Type", "application/json; charset=utf-8");
+                responseHeaders.add("Access-Control-Allow-Origin", "*");
                 Status status = new Status();
                 status.setCode(HttpStatus.UNAUTHORIZED.value());
                 status.setMsg(Constants.INVALID_ACCESS_TOKEN);
@@ -95,8 +96,9 @@ public class UserInfoController {
             String username = oAuthService.getUsernameByAccessToken(accessToken);
             User user = userService.findByUsername(username);
             Gson gson = new GsonBuilder().create();
-
-            return new ResponseEntity(gson.toJson(user), HttpStatus.OK);
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Access-Control-Allow-Origin", "*");
+            return new ResponseEntity(gson.toJson(user),responseHeaders, HttpStatus.OK);
         } catch (OAuthProblemException e) {
             //检查是否设置了错误码
             String errorCode = e.getError();
@@ -107,6 +109,7 @@ public class UserInfoController {
                         .buildHeaderMessage();
                 HttpHeaders headers = new HttpHeaders();
                 headers.add(OAuth.HeaderType.WWW_AUTHENTICATE, oauthResponse.getHeader(OAuth.HeaderType.WWW_AUTHENTICATE));
+                headers.add("Access-Control-Allow-Origin", "*");
                 return new ResponseEntity(headers, HttpStatus.UNAUTHORIZED);
             }
             OAuthResponse oauthResponse = OAuthRSResponse
@@ -118,7 +121,8 @@ public class UserInfoController {
                     .buildHeaderMessage();
             HttpHeaders headers = new HttpHeaders();
             headers.add(OAuth.HeaderType.WWW_AUTHENTICATE, oauthResponse.getHeader(OAuth.HeaderType.WWW_AUTHENTICATE));
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            headers.add("Access-Control-Allow-Origin", "*");
+            return new ResponseEntity(headers,HttpStatus.BAD_REQUEST);
         }
     }
 }

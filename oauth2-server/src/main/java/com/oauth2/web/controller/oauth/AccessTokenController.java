@@ -16,6 +16,7 @@ import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -113,6 +114,10 @@ public class AccessTokenController {
     public HttpEntity tokenByAccount(HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
 
+        //MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
+        HttpHeaders header = new HttpHeaders();
+        header.add("Access-Control-Allow-Origin", "*");
+
         try {
             //构建OAuth请求
             OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
@@ -124,7 +129,7 @@ public class AccessTokenController {
                                 .setError(OAuthError.TokenResponse.INVALID_CLIENT)
                                 .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
-                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity(response.getBody(), header,HttpStatus.valueOf(response.getResponseStatus()));
             }
 
             // 检查客户端安全KEY是否正确
@@ -134,7 +139,7 @@ public class AccessTokenController {
                                 .setError(OAuthError.TokenResponse.UNAUTHORIZED_CLIENT)
                                 .setErrorDescription(Constants.INVALID_CLIENT_ID)
                                 .buildJSONMessage();
-                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity(response.getBody(), header,HttpStatus.valueOf(response.getResponseStatus()));
             }
 
             if(!oAuthService.checkUser(oauthRequest.getUsername(),oauthRequest.getPassword())) {
@@ -143,7 +148,7 @@ public class AccessTokenController {
                                 .setError(OAuthError.TokenResponse.INVALID_CLIENT)
                                 .setErrorDescription(Constants.INVALID_AUTH_USER)
                                 .buildJSONMessage();
-                return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+                return new ResponseEntity(response.getBody(), header,HttpStatus.valueOf(response.getResponseStatus()));
 
             }
 
@@ -162,13 +167,13 @@ public class AccessTokenController {
                     .buildJSONMessage();
 
             //根据OAuthResponse生成ResponseEntity
-            return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+            return new ResponseEntity(response.getBody(), header,HttpStatus.valueOf(response.getResponseStatus()));
 
         } catch (OAuthProblemException e) {
             //构建错误响应
             OAuthResponse res = OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST).error(e)
                     .buildJSONMessage();
-            return new ResponseEntity(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
+            return new ResponseEntity(res.getBody(), header,HttpStatus.valueOf(res.getResponseStatus()));
         }
     }
 
